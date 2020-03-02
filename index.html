@@ -10,8 +10,8 @@
         <link rel="stylesheet" href="css/qgis2web.css">
         <style>
         #map {
-            width: 673px;
-            height: 843px;
+            width: 674px;
+            height: 584px;
         }
         </style>
         <title></title>
@@ -22,8 +22,10 @@
         </div>
         <script src="js/qgis2web_expressions.js"></script>
         <script src="./mapbox/mapbox-gl.js"></script>
-        <script src="data/Parcels_2.js"></script>
-        <script src="data/Buildings_3.js"></script>
+        <script src="data/Boundary_1.js"></script>
+        <script src="data/Streets_2.js"></script>
+        <script src="data/Parcels_3.js"></script>
+        <script src="data/Buildings_4.js"></script>
 <script src="./mapbox/style.js"></script>
 <script src="./js/Autolinker.min.js"></script>
 <script>
@@ -41,13 +43,10 @@ map.addControl(new mapboxgl.AttributionControl({
     compact: false
 }));
 
-map.on('click', 'lyr_Parcels_2_0', function (e) {
+map.on('click', 'lyr_Streets_2_0', function (e) {
     var description = '<table>\
                     <tr>\
-                        <td colspan="2">Parcel Number: ' + (e.features[0].properties['parcel_num'] !== null ? Autolinker.link(e.features[0].properties['parcel_num'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">Residents:' + (e.features[0].properties['residents'] !== null ? Autolinker.link(e.features[0].properties['residents'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                        <td colspan="2">Street Name: ' + (e.features[0].properties['Street Name'] !== null ? Autolinker.link(e.features[0].properties['Street Name'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
                     </tr>\
                 </table>'
 
@@ -58,18 +57,21 @@ map.on('click', 'lyr_Parcels_2_0', function (e) {
 });
 
 // Change the cursor to a pointer when the mouse is over the places layer.
-map.on('mouseenter', 'lyr_Parcels_2_0', function () {
+map.on('mouseenter', 'lyr_Streets_2_0', function () {
     map.getCanvas().style.cursor = 'pointer';
 });
 
 // Change it back to a pointer when it leaves.
-map.on('mouseleave', 'lyr_Parcels_2_0', function () {
+map.on('mouseleave', 'lyr_Streets_2_0', function () {
     map.getCanvas().style.cursor = '';
 });
-map.on('click', 'lyr_Buildings_3_0', function (e) {
+map.on('click', 'lyr_Parcels_3_0', function (e) {
     var description = '<table>\
                     <tr>\
-                        <td colspan="2">' + (e.features[0].properties['fid'] !== null ? Autolinker.link(e.features[0].properties['fid'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                        <td colspan="2">Parcel ID: ' + (e.features[0].properties['parcel_id'] !== null ? Autolinker.link(e.features[0].properties['parcel_id'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">Residents: ' + (e.features[0].properties['residents'] !== null ? Autolinker.link(e.features[0].properties['residents'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
                     </tr>\
                 </table>'
 
@@ -80,15 +82,34 @@ map.on('click', 'lyr_Buildings_3_0', function (e) {
 });
 
 // Change the cursor to a pointer when the mouse is over the places layer.
-map.on('mouseenter', 'lyr_Buildings_3_0', function () {
+map.on('mouseenter', 'lyr_Parcels_3_0', function () {
     map.getCanvas().style.cursor = 'pointer';
 });
 
 // Change it back to a pointer when it leaves.
-map.on('mouseleave', 'lyr_Buildings_3_0', function () {
+map.on('mouseleave', 'lyr_Parcels_3_0', function () {
     map.getCanvas().style.cursor = '';
 });
-    var toggleableLayerIds = ['lyr_Ath_basemap_0_0', 'Ath_basemap','lyr_Ath_basemap_1_0', 'Ath_basemap','lyr_Parcels_2_0', 'Parcels','lyr_Buildings_3_0', 'Buildings'];
+map.on('click', 'lyr_Buildings_4_0', function (e) {
+    var description = '<table>\
+                </table>'
+
+    new mapboxgl.Popup()
+        .setLngLat(e.lngLat)
+        .setHTML(description)
+        .addTo(map);
+});
+
+// Change the cursor to a pointer when the mouse is over the places layer.
+map.on('mouseenter', 'lyr_Buildings_4_0', function () {
+    map.getCanvas().style.cursor = 'pointer';
+});
+
+// Change it back to a pointer when it leaves.
+map.on('mouseleave', 'lyr_Buildings_4_0', function () {
+    map.getCanvas().style.cursor = '';
+});
+    var toggleableLayerIds = ['lyr_Ath_basemap_0_0', 'Ath_basemap','lyr_Boundary_1_0', 'Boundary','lyr_Streets_2_0', 'Streets','lyr_Parcels_3_0', 'Parcels','lyr_Buildings_4_0', 'Buildings'];
 
     for (var i = 0; i < toggleableLayerIds.length; i=i+2) {
         var id = toggleableLayerIds[i];
